@@ -22,6 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<postgresql-final.version>42.5.1</postgresql-final.version>
 		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
+		<querydsl.version>5.0.0</querydsl.version>
 	</properties>
 
 	<modules>

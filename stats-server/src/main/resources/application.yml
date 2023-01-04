@@ -1,7 +1,5 @@
-stats-server:
-  url: http://localhost:9090
 server:
-  port: 8080
+  port: 9090
 spring:
   jpa:
     hibernate:
@@ -15,6 +13,6 @@ spring:
       mode: always
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/ewm_service
+    url: jdbc:postgresql://localhost:5432/stats_server
     username: root
     password: root

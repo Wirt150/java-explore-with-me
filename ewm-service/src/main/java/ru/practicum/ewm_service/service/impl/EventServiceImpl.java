@@ -29,7 +29,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService, AdminEventService {
 
-    private final static int ONE_HOUR = 1;
+    private static final int ONE_HOUR = 1;
     private final EventRepository eventRepository;
     private final LocationService locationService;
     private final UserService userService;
