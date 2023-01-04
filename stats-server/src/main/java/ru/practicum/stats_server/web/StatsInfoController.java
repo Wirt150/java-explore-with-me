@@ -31,8 +31,8 @@ public class StatsInfoController {
     public ResponseEntity<StatsInfo> createStatsInfo(
             @RequestBody final StatsInfoDto dto
     ) {
-        StatsInfo hit = statsService.createStatsinfo(statsInfoMapper.toStatsInfo(dto));
-        return new ResponseEntity<>(hit, HttpStatus.OK);
+        StatsInfo statsInfo = statsService.createStatsinfo(statsInfoMapper.toStatsInfo(dto));
+        return new ResponseEntity<>(statsInfo, HttpStatus.OK);
     }
 
     @GetMapping("/stats")

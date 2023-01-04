@@ -6,7 +6,5 @@ import ru.practicum.ewm_service.entity.model.event.request.PublicEventSearchRequ
 import java.util.List;
 
 public interface EventCustomRepository {
-
     List<Event> eventPublicSearch(PublicEventSearchRequest publicEventSearchRequest);
-
 }

@@ -1,6 +1,6 @@
 package ru.practicum.ewm_service.repository.custom;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import ru.practicum.ewm_service.entity.Category;
 import ru.practicum.ewm_service.entity.Event;
 import ru.practicum.ewm_service.entity.constant.EventState;
@@ -10,6 +10,7 @@ import ru.practicum.ewm_service.entity.model.event.request.PublicEventSearchRequ
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -18,14 +19,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Transactional
+@AllArgsConstructor
 public class EventCustomRepositoryImpl implements EventCustomRepository {
 
     private final EntityManager entityManager;
-
-    @Autowired
-    public EventCustomRepositoryImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
 
     @Override
     public List<Event> eventPublicSearch(PublicEventSearchRequest eventSearchRequest) {

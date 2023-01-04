@@ -11,7 +11,9 @@ import ru.practicum.ewm_service.entity.model.event.request.PublicEventSearchRequ
 import ru.practicum.ewm_service.entity.model.event.response.EventFullDto;
 import ru.practicum.ewm_service.entity.model.event.response.EventShortDto;
 import ru.practicum.ewm_service.service.EventService;
+import ru.practicum.ewm_service.web.StatsServerClient;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
@@ -20,19 +22,23 @@ import java.util.Set;
 @RequestMapping("/events")
 public class PublicEventController {
 
+    private final StatsServerClient statsServerClient;
     private final EventService eventService;
     private final EventMapper eventMapper;
 
     @Autowired
-    public PublicEventController(EventService eventService, EventMapper eventMapper) {
+    public PublicEventController(EventService eventService, EventMapper eventMapper, StatsServerClient statsServerClient) {
         this.eventService = eventService;
         this.eventMapper = eventMapper;
+        this.statsServerClient = statsServerClient;
     }
 
     @GetMapping("/{eventId}")
-    public ResponseEntity<EventFullDto> getEvent(
-            @PathVariable(value = "eventId") final long eventId
+    public ResponseEntity<EventFullDto> getEventId(
+            @PathVariable(value = "eventId") final long eventId,
+            final HttpServletRequest request
     ) {
+        statsServerClient.createHit(request);
         Event event = eventService.findEvent(eventId, PublicEventController.class.getSimpleName());
         return new ResponseEntity<>(eventMapper.toEventFullDto(event), HttpStatus.OK);
     }
@@ -47,8 +53,10 @@ public class PublicEventController {
             @RequestParam(value = "onlyAvailable", required = false) final boolean onlyAvailable,
             @RequestParam(value = "sort", required = false) final SortState sort,
             @RequestParam(value = "rangeStart", required = false) final Timestamp rangeStart,
-            @RequestParam(value = "rangeEnd", required = false) final Timestamp rangeEnd
+            @RequestParam(value = "rangeEnd", required = false) final Timestamp rangeEnd,
+            final HttpServletRequest request
     ) {
+        statsServerClient.createHit(request);
         PublicEventSearchRequest eventSearchRequest = PublicEventSearchRequest.builder()
                 .fromPage(from)
                 .sizePage(size)

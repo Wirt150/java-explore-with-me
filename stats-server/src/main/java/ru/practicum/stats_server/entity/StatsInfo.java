@@ -19,9 +19,10 @@ public class StatsInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "uri", referencedColumnName = "name")
-    private Uri uri;
+    @Column(name = "app")
+    private String app;
+    @Column(name = "uri")
+    private String uri;
     @Column(name = "ip")
     private String ip;
     @Column
