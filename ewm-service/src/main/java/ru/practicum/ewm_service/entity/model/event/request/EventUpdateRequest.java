@@ -27,7 +27,7 @@ public class EventUpdateRequest {
     private Long category;
     @Size(min = 20, max = 7000, message = "Полное описание события: 20 ... 7000 символов.")
     private String description;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @ValidateDate(message = "Дата и время на которые намечено событие не может быть раньше, чем через 2 часа от текущего момента.")
     private Timestamp eventDate;
     private boolean paid;

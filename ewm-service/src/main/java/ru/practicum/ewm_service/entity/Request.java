@@ -23,7 +23,7 @@ public class Request {
     private Long id;
     @Column(name = "created")
     @Builder.Default
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp created = Timestamp.valueOf(LocalDateTime.now());
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event", referencedColumnName = "id")

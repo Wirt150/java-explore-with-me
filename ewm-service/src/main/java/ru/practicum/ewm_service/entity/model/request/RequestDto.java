@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 public class RequestDto {
     @Id
     private Long id;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp created;
     private Integer event;
     private Integer requester;

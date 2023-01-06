@@ -18,7 +18,7 @@ public class Hit {
     private String uri;
     private String ip;
     @Builder.Default
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp timestamp = Timestamp.from(Instant.now());
 }
 

@@ -36,14 +36,14 @@ public class Event {
     private Integer confirmedRequests = 0;
     @Builder.Default
     @Column(name = "created_on")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
-    private Timestamp createdOn = Timestamp.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")));
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private Timestamp createdOn = Timestamp.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
     @NotNull
     @Size(max = 7000, message = "Максимальный размер окграничен, 7000 символов.")
     @Column(name = "description")
     private String description;
     @Column(name = "event_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp eventDate;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "initiator", referencedColumnName = "id")
@@ -58,8 +58,8 @@ public class Event {
     private Integer participantLimit = 0;
     @Builder.Default
     @Column(name = "published_on")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
-    private Timestamp publishedOn = Timestamp.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")));
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private Timestamp publishedOn = Timestamp.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
     @Builder.Default
     @Column(name = "request_moderation")
     private boolean requestModeration = true;

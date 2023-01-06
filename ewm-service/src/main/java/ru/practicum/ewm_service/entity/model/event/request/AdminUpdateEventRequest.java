@@ -17,7 +17,7 @@ public class AdminUpdateEventRequest {
     private String annotation;
     private Long category;
     private String description;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp eventDate;
     private Location location;
     private boolean paid;

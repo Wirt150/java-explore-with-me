@@ -26,5 +26,4 @@ public interface EventMapper {
     default Category mapCategoryByEvent(Long categoryId) {
         return Category.builder().id(categoryId).build();
     }
-
 }
