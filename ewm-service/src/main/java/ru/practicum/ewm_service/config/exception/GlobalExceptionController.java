@@ -72,7 +72,7 @@ public class GlobalExceptionController {
                 .errors(List.of(ex.getClass().getName()))
                 .message(ex.getLocalizedMessage())
                 .reason("Ошибка поданных данных: " + request.getDescription(false))
-                .status(HttpStatus.NOT_FOUND)
+                .status(HttpStatus.FORBIDDEN)
                 .build();
     }
 
