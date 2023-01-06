@@ -71,7 +71,7 @@ public class GlobalExceptionController {
         return ApiError.builder()
                 .errors(List.of(ex.getClass().getName()))
                 .message(ex.getLocalizedMessage())
-                .reason("Ошибка поданных данных: " + request.getDescription(false))
+                .reason("Доступ к ресурсу запрещен: " + request.getDescription(false))
                 .status(HttpStatus.FORBIDDEN)
                 .build();
     }
