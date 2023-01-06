@@ -3,6 +3,8 @@ package ru.practicum.ewm_service.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Getter
@@ -20,6 +22,8 @@ public class Compilation {
     private Long id;
     @Column(name = "pinned")
     private boolean pinned;
+    @NotNull
+    @Size(max = 120, message = "Максимальный размер окграничен, 120 символов.")
     @Column(name = "title")
     private String title;
     @ManyToMany

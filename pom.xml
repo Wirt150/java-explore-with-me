@@ -22,6 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<postgresql-final.version>42.5.1</postgresql-final.version>
 		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
+		<lombok.mapstruct.binding>0.2.0</lombok.mapstruct.binding>
 		<querydsl.version>5.0.0</querydsl.version>
 	</properties>
 
@@ -64,6 +65,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql-final.version}</version>
@@ -101,6 +107,11 @@
 							<spring.profiles.active>test</spring.profiles.active>
 						</systemPropertyVariables>
 					</configuration>
+				</plugin>
+
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.1</version>
 				</plugin>
 
 				<plugin>

@@ -2,6 +2,7 @@ package ru.practicum.ewm_service.repository;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import ru.practicum.ewm_service.entity.Event;
 import ru.practicum.ewm_service.entity.constant.EventState;
 import ru.practicum.ewm_service.repository.custom.EventCustomRepository;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@Repository
 public interface EventRepository extends JpaRepository<Event, Long>, EventCustomRepository {
     boolean existsByCategoryId(Long catId);
 

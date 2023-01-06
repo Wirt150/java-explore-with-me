@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 @Getter
@@ -19,10 +21,16 @@ public class StatsInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
+    @Size(max = 225, message = "Максимальный размер окграничен, 225 символа.")
     @Column(name = "app")
     private String app;
+    @NotNull
+    @Size(max = 100, message = "Максимальный размер окграничен, 100 символа.")
     @Column(name = "uri")
     private String uri;
+    @NotNull
+    @Size(max = 20, message = "Максимальный размер окграничен, 20 символа.")
     @Column(name = "ip")
     private String ip;
     @Column

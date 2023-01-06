@@ -1,6 +1,7 @@
 package ru.practicum.ewm_service.repository.custom;
 
 import lombok.AllArgsConstructor;
+import org.springframework.util.StringUtils;
 import ru.practicum.ewm_service.entity.Category;
 import ru.practicum.ewm_service.entity.Event;
 import ru.practicum.ewm_service.entity.constant.EventState;
@@ -33,7 +34,7 @@ public class EventCustomRepositoryImpl implements EventCustomRepository {
         List<Predicate> predicatesOr = new ArrayList<>();
         List<Predicate> predicatesAnd = new ArrayList<>();
 
-        if (!eventSearchRequest.getText().isEmpty()) {
+        if (StringUtils.hasText(eventSearchRequest.getText())) {
             predicatesOr.add(cb.like(cb.lower(event.get("annotation")), "%" + eventSearchRequest.getText().toLowerCase() + "%"));
             predicatesOr.add(cb.like(cb.lower(event.get("description")), "%" + eventSearchRequest.getText().toLowerCase() + "%"));
         }

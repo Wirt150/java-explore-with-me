@@ -5,6 +5,8 @@ import lombok.*;
 import ru.practicum.ewm_service.entity.constant.EventState;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,10 +21,11 @@ import java.time.format.DateTimeFormatter;
 @Entity
 @Table(name = "events")
 public class Event {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
+    @Size(max = 2000, message = "Максимальный размер окграничен, 2000 символов.")
     @Column(name = "annotation")
     private String annotation;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,6 +38,8 @@ public class Event {
     @Column(name = "created_on")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private Timestamp createdOn = Timestamp.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")));
+    @NotNull
+    @Size(max = 7000, message = "Максимальный размер окграничен, 7000 символов.")
     @Column(name = "description")
     private String description;
     @Column(name = "event_date")
@@ -62,6 +67,8 @@ public class Event {
     @Column(name = "state", length = 10)
     @Enumerated(EnumType.STRING)
     private EventState state = EventState.PENDING;
+    @NotNull
+    @Size(max = 120, message = "Максимальный размер окграничен, 120 символов.")
     @Column(name = "title")
     private String title;
     @Builder.Default

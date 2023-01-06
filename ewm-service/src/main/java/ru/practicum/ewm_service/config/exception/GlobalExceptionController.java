@@ -13,6 +13,7 @@ import ru.practicum.ewm_service.error.category.CategoryNotFoundException;
 import ru.practicum.ewm_service.error.compilation.CompilationNotFoundException;
 import ru.practicum.ewm_service.error.event.EventNotFoundException;
 import ru.practicum.ewm_service.error.location.LocationNotFoundException;
+import ru.practicum.ewm_service.error.request.RequestStatusException;
 import ru.practicum.ewm_service.error.user.UserNotFoundException;
 
 import javax.persistence.EntityNotFoundException;
@@ -53,7 +54,20 @@ public class GlobalExceptionController {
             CompilationNotFoundException.class
     })
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiError errorResponse(final EntityNotFoundException ex, WebRequest request) {
+    public ApiError handleEntityNotFoundException(final EntityNotFoundException ex, WebRequest request) {
+        return ApiError.builder()
+                .errors(List.of(ex.getClass().getName()))
+                .message(ex.getLocalizedMessage())
+                .reason("Ошибка поданных данных: " + request.getDescription(false))
+                .status(HttpStatus.NOT_FOUND)
+                .build();
+    }
+
+    @ExceptionHandler(value = {
+            RequestStatusException.class
+    })
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ApiError handleForbiddenException(final Throwable ex, WebRequest request) {
         return ApiError.builder()
                 .errors(List.of(ex.getClass().getName()))
                 .message(ex.getLocalizedMessage())
@@ -76,7 +90,7 @@ public class GlobalExceptionController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiError onMethodArgumentNotValidException(MethodArgumentNotValidException ex, WebRequest request) {
+    public ApiError handleOnMethodArgumentNotValidException(MethodArgumentNotValidException ex, WebRequest request) {
         List<String> errors = new ArrayList<>();
         ex.getBindingResult().getFieldErrors().forEach(e -> errors.add(e.getField() + ": " + e.getDefaultMessage()));
         ex.getBindingResult().getGlobalErrors().forEach(e -> errors.add(e.getObjectName() + ": " + e.getDefaultMessage()));
