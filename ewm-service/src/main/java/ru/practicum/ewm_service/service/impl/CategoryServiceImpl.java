@@ -40,7 +40,8 @@ public class CategoryServiceImpl implements CategoryService, AdminCategoryServic
 
     @Override
     public Category updateCategory(final Category category) {
-        final Category categoryUpdate = categoryRepository.findById(category.getId()).orElseThrow(() -> new CategoryNotFoundException(category.getId()));
+        final Category categoryUpdate = categoryRepository
+                .findById(category.getId()).orElseThrow(() -> new CategoryNotFoundException(category.getId()));
         categoryUpdate.setName(category.getName());
         return categoryRepository.save(categoryUpdate);
     }

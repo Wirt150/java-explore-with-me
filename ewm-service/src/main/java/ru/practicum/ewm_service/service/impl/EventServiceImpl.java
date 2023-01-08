@@ -45,7 +45,9 @@ public class EventServiceImpl implements EventService, AdminEventService {
 
     @Override
     public Event updateEvent(final EventUpdateRequest eventUpdateRequest, final Long userId) {
-        final Event eventUpdate = eventRepository.findByIdAndInitiatorIdAndStateNot(eventUpdateRequest.getEventId(), userId, EventState.CANCELED).orElseThrow(() -> new EventNotFoundException(eventUpdateRequest.getEventId()));
+        final Event eventUpdate = eventRepository
+                .findByIdAndInitiatorIdAndStateNot(eventUpdateRequest.getEventId(), userId, EventState.CANCELED)
+                .orElseThrow(() -> new EventNotFoundException(eventUpdateRequest.getEventId()));
         if (EventState.CANCELED.equals(eventUpdate.getState())) {
             eventUpdate.setState(EventState.PENDING);
         }
@@ -61,13 +63,15 @@ public class EventServiceImpl implements EventService, AdminEventService {
 
     @Override
     public Event findEvent(final Long eventId, final String name) {
-        if (name.equals("PublicEventController")) {
-            Event findEvent = eventRepository.findEventByIdAndState(eventId, EventState.PUBLISHED)
-                    .orElseThrow(() -> new EventNotFoundException(eventId));
-            findEvent.setViews(findEvent.getViews() + 1);
-            return findEvent;
+        switch (name) {
+            case "PublicEventController":
+                Event findEvent = eventRepository.findEventByIdAndState(eventId, EventState.PUBLISHED)
+                        .orElseThrow(() -> new EventNotFoundException(eventId));
+                findEvent.setViews(findEvent.getViews() + 1);
+                return findEvent;
+            default:
+                return eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
         }
-        return eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
     }
 
     @Override
@@ -87,7 +91,8 @@ public class EventServiceImpl implements EventService, AdminEventService {
 
     @Override
     public Event cancelEvent(final Long userId, final Long eventId) {
-        final Event eventUpdate = eventRepository.findByIdAndInitiatorIdAndState(eventId, userId, EventState.PENDING).orElseThrow(() -> new EventNotFoundException(eventId));
+        final Event eventUpdate = eventRepository.findByIdAndInitiatorIdAndState(eventId, userId, EventState.PENDING)
+                .orElseThrow(() -> new EventNotFoundException(eventId));
         eventUpdate.setState(EventState.CANCELED);
         return eventRepository.save(eventUpdate);
     }
@@ -101,7 +106,10 @@ public class EventServiceImpl implements EventService, AdminEventService {
 
     @Override
     public List<Event> eventSearchAdmin(final AdminEventSearchRequest eventSearchRequest) {
-        return eventRepository.findAllByInitiatorIdInAndStateAndCategoryIdInAndEventDateBetween(eventSearchRequest.getUsers(), eventSearchRequest.getEventState(), eventSearchRequest.getCategories(), eventSearchRequest.getRangeStart(), eventSearchRequest.getRangeEnd(), PageRequest.of(eventSearchRequest.getFromPage(), eventSearchRequest.getSizePage()));
+        return eventRepository.findAllByInitiatorIdInAndStateAndCategoryIdInAndEventDateBetween(
+                eventSearchRequest.getUsers(), eventSearchRequest.getEventState(), eventSearchRequest.getCategories(),
+                eventSearchRequest.getRangeStart(), eventSearchRequest.getRangeEnd(),
+                PageRequest.of(eventSearchRequest.getFromPage(), eventSearchRequest.getSizePage()));
     }
 
     @Override
@@ -122,14 +130,16 @@ public class EventServiceImpl implements EventService, AdminEventService {
     @Override
     public Event publishEvent(final Long eventId) {
         Timestamp timestampValid = Timestamp.valueOf(LocalDateTime.now().plusHours(ONE_HOUR));
-        Event eventPublish = eventRepository.findEventByIdAndStateAndEventDateAfter(eventId, EventState.PENDING, timestampValid).orElseThrow(() -> new EventApproveNotFound(eventId));
+        Event eventPublish = eventRepository.findEventByIdAndStateAndEventDateAfter(eventId, EventState.PENDING, timestampValid)
+                .orElseThrow(() -> new EventApproveNotFound(eventId));
         eventPublish.setState(EventState.PUBLISHED);
         return eventRepository.save(eventPublish);
     }
 
     @Override
     public Event rejectEvent(final Long eventId) {
-        Event eventReject = eventRepository.findEventByIdAndStateNot(eventId, EventState.CANCELED).orElseThrow(() -> new EventApproveNotFound(eventId));
+        Event eventReject = eventRepository.findEventByIdAndStateNot(eventId, EventState.CANCELED)
+                .orElseThrow(() -> new EventApproveNotFound(eventId));
         eventReject.setState(EventState.CANCELED);
         return eventRepository.save(eventReject);
     }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import ru.practicum.ewm_service.error.category.CategoryNotFoundException;
+import ru.practicum.ewm_service.error.comment.CommentNotFoundException;
+import ru.practicum.ewm_service.error.comment.CommentStatusException;
 import ru.practicum.ewm_service.error.compilation.CompilationNotFoundException;
 import ru.practicum.ewm_service.error.event.EventNotFoundException;
 import ru.practicum.ewm_service.error.location.LocationNotFoundException;
@@ -51,7 +53,8 @@ public class GlobalExceptionController {
             UserNotFoundException.class,
             LocationNotFoundException.class,
             EventNotFoundException.class,
-            CompilationNotFoundException.class
+            CompilationNotFoundException.class,
+            CommentNotFoundException.class
     })
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiError handleEntityNotFoundException(final EntityNotFoundException ex, WebRequest request) {
@@ -64,7 +67,8 @@ public class GlobalExceptionController {
     }
 
     @ExceptionHandler(value = {
-            RequestStatusException.class
+            RequestStatusException.class,
+            CommentStatusException.class
     })
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ApiError handleForbiddenException(final Throwable ex, WebRequest request) {
@@ -83,10 +87,9 @@ public class GlobalExceptionController {
                 .errors(List.of(ex.getClass().getName()))
                 .message(ex.getLocalizedMessage())
                 .reason("В запросе не указанны обязательные параметры: " + request.getDescription(false))
-                .status(HttpStatus.CONFLICT)
+                .status(HttpStatus.BAD_REQUEST)
                 .build();
     }
-
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

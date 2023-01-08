@@ -35,16 +35,19 @@ public class RequestsServiceImpl implements RequestsService {
 
         Event event = eventService.findEvent(eventId, RequestsServiceImpl.class.getSimpleName());
 
-        if (!event.getState().equals(EventState.PUBLISHED) && Objects.equals(event.getParticipantLimit(), requestRepository.findAllByEventId(eventId)) && Objects.equals(event.getInitiator().getId(), userId)) {
+        if (!event.getState().equals(EventState.PUBLISHED) && Objects.equals(event.getParticipantLimit(),
+                requestRepository.findAllByEventId(eventId)) && Objects.equals(event.getInitiator().getId(), userId)) {
             throw new RequestNotCreateException(eventId, userId);
         }
 
-        return requestRepository.save(Request.builder().event(event).requester(userService.getById(userId)).status(event.isRequestModeration() ? RequestStatus.PENDING : RequestStatus.CONFIRMED).build());
+        return requestRepository.save(Request.builder().event(event).requester(userService.getById(userId))
+                .status(event.isRequestModeration() ? RequestStatus.PENDING : RequestStatus.CONFIRMED).build());
     }
 
     @Override
     public Request cancelRequest(final Long userId, final Long requestId) {
-        Request requestCancel = requestRepository.findRequestByIdAndRequesterId(requestId, userId).orElseThrow(() -> new RequestNotFoundException(requestId));
+        Request requestCancel = requestRepository.findRequestByIdAndRequesterId(requestId, userId)
+                .orElseThrow(() -> new RequestNotFoundException(requestId));
         requestCancel.setStatus(RequestStatus.CANCELED);
         return requestRepository.save(requestCancel);
     }
@@ -63,7 +66,8 @@ public class RequestsServiceImpl implements RequestsService {
     public Request confirmRequest(Long userId, Long eventId, Long reqId) {
         Event event = eventService.findEvent(eventId, RequestsServiceImpl.class.getSimpleName());
         Request request = requestRepository.findById(reqId).orElseThrow(() -> new RequestNotFoundException(reqId));
-        if (!event.isRequestModeration() || event.getParticipantLimit() == 0 || Objects.equals(event.getConfirmedRequests(), event.getParticipantLimit())) {
+        if (!event.isRequestModeration() || event.getParticipantLimit() == 0 ||
+                Objects.equals(event.getConfirmedRequests(), event.getParticipantLimit())) {
             throw new RequestStatusException();
         }
         request.setStatus(RequestStatus.CONFIRMED);
