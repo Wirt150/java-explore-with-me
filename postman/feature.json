@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "0da440ab-af2a-494b-aaa6-fc9f9e8949f0",
-		"name": "Test Explore With Me - Feature",
+		"name": "Test Explore With Me - Main service Feature",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "22497105"
 	},
@@ -449,8 +449,8 @@
 									"\r",
 									"pm.test(\"Данные должны соотвествовать\", function () {\r",
 									"    pm.expect(target[0].id).to.not.be.null;\r",
-									"    pm.expect('Тестовый комментарий к событию 1').equal(target[1].text, 'Коммертарии должны соответствовать.');\r",
-									"    pm.expect('Измененный тестовый комментарий к событию 1').equal(target[0].text, 'Коммертарии должны соответствовать.');\r",
+									"    pm.expect(\"Тестовый комментарий к событию 1\").equal(target[0].text, 'Коммертарии должны соответствовать.');\r",
+									"    pm.expect(\"Измененный тестовый комментарий к событию 1\").equal(target[1].text, 'Коммертарии должны соответствовать.');\r",
 									"});\r",
 									"\r",
 									""
