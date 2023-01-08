@@ -54,7 +54,7 @@ public class CommentsServiceImpl implements CommentService, AdminCommentService 
 
     @Override
     public List<Comment> getComments(final Long eventId, final int from, final int size) {
-        return commentRepository.findAllByEventIdAndStatusOrderByCreateOnDesc(eventId, CommentState.PUBLISHED, PageRequest.of(from, size));
+        return commentRepository.findAllByEventIdAndStatusOrderByIdDesc(eventId, CommentState.PUBLISHED, PageRequest.of(from, size));
     }
 
     @Override

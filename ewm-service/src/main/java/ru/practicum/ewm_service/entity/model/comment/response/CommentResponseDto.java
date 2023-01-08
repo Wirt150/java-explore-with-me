@@ -18,7 +18,6 @@ import java.sql.Timestamp;
 public class CommentResponseDto {
     @Id
     private Long id;
-    //    private EventShortDto event;
     private UserShortDto creator;
     private String text;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
