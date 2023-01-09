@@ -24,3 +24,4 @@ public class CommentResponseDto {
     private Timestamp createOn;
     private CommentState status;
 }
+
