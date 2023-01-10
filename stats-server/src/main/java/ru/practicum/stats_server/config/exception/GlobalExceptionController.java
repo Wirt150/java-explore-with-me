@@ -46,7 +46,7 @@ public class GlobalExceptionController {
                 .errors(List.of(ex.getClass().getName()))
                 .message(ex.getLocalizedMessage())
                 .reason("В запросе не указанны обязательные параметры: " + request.getDescription(false))
-                .status(HttpStatus.CONFLICT)
+                .status(HttpStatus.BAD_REQUEST)
                 .build();
     }
 
