@@ -1,6 +1,3 @@
-#### [Ссылка на пул-реквест](https://github.com/Wirt150/java-explore-with-me/pull/3)
-
-
 # Дипломый проект курса Яндекс.Практикума (Java-developer) 
 ## *java-explore-with-me*
 
