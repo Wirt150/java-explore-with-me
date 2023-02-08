@@ -18,3 +18,13 @@ spring:
     url: jdbc:postgresql://localhost:5432/ewm_service
     username: root
     password: root
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:ewm_service
+    username: test
+    password: test

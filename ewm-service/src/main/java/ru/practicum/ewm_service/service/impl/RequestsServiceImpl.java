@@ -36,7 +36,7 @@ public class RequestsServiceImpl implements RequestsService {
         Event event = eventService.findEvent(eventId, RequestsServiceImpl.class.getSimpleName());
 
         if (!event.getState().equals(EventState.PUBLISHED) && Objects.equals(event.getParticipantLimit(),
-                requestRepository.findAllByEventId(eventId)) && Objects.equals(event.getInitiator().getId(), userId)) {
+                requestRepository.countAllByEventId(eventId)) && Objects.equals(event.getInitiator().getId(), userId)) {
             throw new RequestNotCreateException(eventId, userId);
         }
 
